@@ -29,6 +29,14 @@ server.get('/db-test', (req, res) => {
   });
 });
 
+
+// questions
+// - id
+// - title
+// - category
+// - author_id
+// - votes
+// - created_at
 server.post('/questions', (req, res) => {
   // Extract data from the request body
   const title = req.body.title;
@@ -57,13 +65,20 @@ server.post('/questions', (req, res) => {
 );
 });
 
-// server.post('./answers', (req,res)=> {
-//   const 
-// });
-
-// server.post('./answers', (req,res)=> {
-//   const 
-// });
+// answers
+// - id
+// - question_id
+// - author_id
+// - text
+// - votes
+// - accepted
+server.post('./answers', (req,res)=> {
+  const question_id
+  const author_id
+  const text
+  const votes
+  const accepted
+});
 
 
 
