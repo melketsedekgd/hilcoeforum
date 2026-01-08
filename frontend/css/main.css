@@ -1,0 +1,31 @@
+/* Global Styles */
+:root{
+  --primary: #2563eb;
+  --accent: #16a34a;
+  --bg: #f9fafb;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --max-width: 1200px;
+  --radius: 8px;
+  --border: #e5e7eb;
+}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+html,body{
+    background-color: var(--bg);
+    color: var(--text);
+    height: 100%;
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+p{
+    color: var(--text);
+    line-height: 1.6;
+}

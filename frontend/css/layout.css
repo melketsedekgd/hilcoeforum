@@ -1,0 +1,41 @@
+.app-layout{
+    display: flex;
+    height: 100vh;
+}
+.sidebar{
+    width: 250px;
+    background-color: var(--bg);
+    border-right: 1px solid var(--border);
+    padding: 1rem;
+}
+.main-content{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.top-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: transparent;
+    border-bottom: 1px solid var(--border);
+
+}
+.page-container{
+    padding: 1.5rem;
+}
+@media (max-width: 900px){
+    .app-layout{
+        flex-direction: column;
+    }
+    .sidebar{
+        position: fixed;
+        left: -100%;
+        transform:translateX(0);
+        z-index:30;
+    }
+    .container{ 
+        padding:0.75rem; 
+    }
+}
