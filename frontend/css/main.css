@@ -3,12 +3,21 @@
   --primary: #2563eb;
   --accent: #16a34a;
   --bg: #f9fafb;
+  --surface: #ffffff;
   --card: #ffffff;
   --text: #111827;
-  --muted: #6b7280;
+  --muted: #777;
   --max-width: 1200px;
   --radius: 8px;
-  --border: #e5e7eb;
+  --border: #ddd;
+}
+body.dark {
+  --bg: #121212;
+  --surface: #1e1e1e;
+  --card: #1e1e1e;
+  --text: #f1f1f1;
+  --muted: #aaa;
+  --border: #333;
 }
 *{
     margin:0;

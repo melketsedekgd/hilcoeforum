@@ -7,7 +7,9 @@
 
   <link rel="stylesheet" href="../css/layout.css">
   <link rel="stylesheet" href="../css/components.css">
-<link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
 
@@ -19,27 +21,43 @@
     </div>
 
     <nav class="nav-menu">
-      <p class="nav-label">NAVIGATION</p>
-      <button onclick="loadPage('home.html')">🏠 Home</button>
-      <!-- Remember this is to call a function to call stg else there is no popular.html -->
-      <button onclick="loadPage('#')">🔥 Popular</button>
-      <button onclick="loadPage('about.html')">ℹ️ About</button>
+        <p class="nav-label">NAVIGATION</p>
+        <button onclick="loadPage('./home.html')">🏠 Home</button>
+        <!-- Remember this is to call a function to call stg else there is no popular.html -->
+        <button onclick="loadPage('#')">🔥 Popular</button>
+        <button onclick="loadPage('./about.html')">ℹ️ About</button>
 
-      <p class="nav-label">CATEGORIES</p>
-      <!-- THis are not html files either they are to be connected to the backend to retrieve the categorical search -->
-      <button onclick="loadPage('#')">💻 Developer</button>
-      <button onclick="loadPage('#')">🔐 Cyber Security</button>
+        <!-- THis are not html files either they are to be connected to the backend to retrieve the categorical search -->
+        <p class="nav-label">CATEGORIES</p>
+
+        <button onclick="loadPage('#')" class="nav-item">
+            <span class="material-icons">code</span>
+            Developer
+        </button>
+        <button onclick="loadPage('#')" class="nav-item">
+            <span class="material-icons">security</span>
+            Cyber Security
+        </button>
+
     </nav>
   </aside>
 
   <main class="main-content">
     <header class="top-header">
-      <input class="search-input" placeholder="Search questions...">
-      <div class="header-actions">
-        <button class="btn btn-primary" onclick="loadPage('askquestions.html')">✨ Ask Question</button>
-        <button class="btn" onclick="loadPage('login.html')">Login</button>
-      </div>
+        <div class="search-bar">
+            <span class="material-icons search-icon">search</span>
+            <input type="text" placeholder="Search questions..." />
+        </div>
+
+        <div class="header-actions">
+            <button class="btn btn-primary" onclick="loadPage('./askquestions.html')">✨ Ask Question</button>
+            <button class="btn" onclick="loadPage('./login.html')">Login</button>
+            <button class="icon-btn" id="theme-toggle">
+                <span class="material-icons" id="theme-icon">dark_mode</span>
+            </button>
+        </div>
     </header>
+
 
     <!-- JS injects pages here -->
     <div id="content-display"></div>
@@ -47,6 +65,6 @@
 
 </div>
 
-<script src="js/index.js"></script>
+<script src="../js/index.js"></script>
 </body>
 </html>
