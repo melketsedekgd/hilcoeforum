@@ -1,8 +1,8 @@
 // This is yours as well rutha :) just showing you the idea
+// This function handles loading the "home.html", "about.html", etc.
 async function loadPage(pageUrl) {
-  const contentDisplay = document.getElementById('content-display');
+  const contentArea = document.getElementById('content-display');
   
-  // Prevent links with '#' from trying to fetch
   if (pageUrl === '#') return;
 
   try {
@@ -10,23 +10,25 @@ async function loadPage(pageUrl) {
     if (!response.ok) throw new Error('Page not found');
     
     const html = await response.text();
-    contentDisplay.innerHTML = html;
+    contentArea.innerHTML = html;
   } catch (error) {
-    contentDisplay.innerHTML = `<h2>Error 404</h2><p>Could not load the page.</p>`;
     console.error("Error loading page:", error);
+    contentArea.innerHTML = "<h2>Error loading page</h2>";
   }
 }
 
-// Your existing theme toggle code...
+// theme toggle
 const toggleBtn = document.getElementById('theme-toggle');
 const icon = document.getElementById("theme-icon");
 
-toggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  icon.textContent = document.body.classList.contains("dark") ? "light_mode" : "dark_mode";
-});
+if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        icon.textContent = document.body.classList.contains("dark") ? "light_mode" : "dark_mode";
+    });
+}
 
-// Load home on startup
+// defalult load home page
 window.addEventListener("DOMContentLoaded", () => {
   loadPage("./home.html");
 });
