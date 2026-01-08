@@ -1,0 +1,51 @@
+<!-- login.html -->
+<div class="auth-wrapper">
+  <main class="container auth-container" id="auth-container" aria-live="polite">
+    <section class="auth-panel auth-panel--signup" aria-hidden="false">
+      <form class="form form--auth" id="signup-form">
+        <h1 class="form__title">Create account</h1>
+        <p class="form__subtitle">or use your email to register</p>
+
+        <label class="form__label">
+          <span class="visually-hidden">Name</span>
+          <input class="form__input" name="name" type="text" placeholder="Name" required>
+        </label>
+
+        <label class="form__label">
+          <span class="visually-hidden">Email</span>
+          <input class="form__input" name="email" type="email" placeholder="Email" required>
+        </label>
+
+        <label class="form__label">
+          <span class="visually-hidden">Password</span>
+          <input class="form__input" name="password" type="password" placeholder="Password" required>
+        </label>
+
+        <button class="btn btn--primary" type="submit" data-action="signup">Sign up</button>
+      </form>
+    </section>
+
+    <section class="auth-panel auth-panel--signin" aria-hidden="true">
+      <form class="form form--auth" id="signin-form">
+        <h1 class="form__title">Sign in</h1>
+        <p class="form__subtitle">or use your email account</p>
+
+        <label class="form__label">
+          <input class="form__input" name="email" type="email" placeholder="Email" required>
+        </label>
+
+        <label class="form__label">
+          <input class="form__input" name="password" type="password" placeholder="Password" required>
+        </label>
+
+        <a class="form__link" href="#" aria-label="forgot password">Forgot password?</a>
+        <button class="btn btn--primary" type="submit" data-action="signin">Sign in</button>
+      </form>
+    </section>
+
+    <aside class="auth-toggle">
+      <button id="register" class="btn" aria-controls="auth-container" data-action="show-signup">Sign up</button>
+      <button id="login"    class="btn" aria-controls="auth-container" data-action="show-signin">Sign in</button>
+    </aside>
+  </main>
+</div>

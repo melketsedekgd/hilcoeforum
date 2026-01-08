@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HiLCoE Community</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="hilcoe-logo.png" alt="HiLCoE Logo">
+            </div>
+            <nav class="nav-menu">
+                <p class="nav-label">NAVIGATION</p>
+                <button onclick="loadPage('home.html')">🏠 Home</button>
+                <button onclick="loadPage('popular.html')">🔥 Popular</button>
+                <button onclick="loadPage('about.html')">ℹ️ About Us</button>
+                
+                <p class="nav-label">CATEGORIES</p>
+                <button onclick="loadPage('dev.html')">💻 Developer</button>
+                <button onclick="loadPage('cyber.html')">🔐 Cyber Security</button>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="search-wrapper">
+                    <input type="text" id="main-search" placeholder="Search questions, topics..." onkeyup="doSearch()">
+                </div>
+                <div class="header-actions">
+                    <button class="ask-btn" onclick="loadPage('askquestions.html')">✨ Ask Question</button>
+                    <button class="login-btn" onclick="loadPage('login.html')">Login</button>
+                </div>
+            </header>
+
+            <div id="content-display">
+                </div>
+        </main>
+    </div>
+
+    <script src="./js/index.js"></script>
+</body>
+</html>
