@@ -14,14 +14,28 @@ server.get('/', (req, res) => {
 });
 
 server.get('/questions', (req, res) => {
-  db.all('SELECT * FROM questions', (err, rows) => {
-    if (err) {
-      // If something goes wrong, send an error
-      return res.status(500).json({ error: err.message });
-    }
-    // If successful, send the data
-    res.json(rows);
-  });
+  db.all(`
+  SELECT 
+    q.id,
+    q.title,
+    q.category,
+    q.author_id,
+    u.username,               -- ← new!
+    q.votes,
+    q.created_at,
+    COUNT(a.id) AS answer_count,
+    MAX(a.accepted) AS has_accepted_answer
+  FROM questions q
+  JOIN users u ON q.author_id = u.id      -- ← join users
+  LEFT JOIN answers a ON q.id = a.question_id
+  GROUP BY q.id
+  ORDER BY q.created_at DESC
+`, (err, questions) => {
+  if (err) {
+    return res.status(500).json({ error: err.message });
+  }
+  res.json(questions);
+});
 });
 
 server.get('/db-test', (req, res) => {
@@ -120,17 +134,23 @@ server.get('/questions/:id', (req, res) => {
       return res.status(404).json({ error: 'Question not found' });
     }
 
-    // Fetch answers for this question
-    db.all('SELECT * FROM answers WHERE question_id = ?', [questionId], (err, answers) => {
+    // Fetch answers WITH author usernames
+    db.all(`
+      SELECT a.*, u.username AS answer_author
+      FROM answers a
+      JOIN users u ON a.author_id = u.id
+      WHERE a.question_id = ?
+      ORDER BY a.created_at ASC
+    `, [questionId], (err, answers) => {
       if (err) {
         return res.status(500).json({ error: err.message });
       }
 
-      // Combine question and answers into one response
       res.json({ ...question, answers });
     });
-  });
 });
+})
+
 
 
 server.listen(port, () => {

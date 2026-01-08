@@ -9,7 +9,7 @@
   <h1>Ask a Question</h1>
   <form id="questionForm">
     <input type="text" id="title" placeholder="Question title" required />
-    <input type="text" id="category" placeholder="Category (optional)" />
+    <input type="text" id="category" placeholder="Category" />
     <input type="number" id="authorId" placeholder="Your User ID" required />
     <button type="submit">Post Question</button>
   </form>
@@ -25,11 +25,60 @@ function loadQuestions() {
     .then(res => res.json())
     .then(questions => {
       const list = document.getElementById('questionsList');
-      list.innerHTML = questions.map(q => 
-        `<li><strong>${q.title}</strong> (${q.category || 'no category'}) - by user ${q.author_id}</li>`
-      ).join('');
+      list.innerHTML = questions.map(q => `
+  <li style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+    <div>
+      <strong>${q.title}</strong>
+      ${q.has_accepted_answer ? '<span style="background:green; color:white; padding:2px 6px; margin-left:8px;">✓ Solved</span>' : ''}
+    </div>
+    <div>Category: ${q.category || 'general'}</div>
+    <div>Answers: ${q.answer_count}</div>
+    <div>Votes: ${q.votes}</div>
+    <div>Asked by: <strong>${q.username}</strong></div>
+    <!-- NEW: View Answers button -->
+    <button onclick="viewAnswers(${q.id})" style="margin-top:8px;">View Answers</button>
+    <!-- Container to show answers -->
+    <div id="answers-${q.id}" style="margin-top:10px; display:none;"></div>
+  </li>
+`).join('');
     })
     .catch(err => console.error('Failed to load questions:', err));
+}
+
+async function viewAnswers(questionId) {
+  // Show loading text
+  const container = document.getElementById(`answers-${questionId}`);
+  container.style.display = 'block';
+  container.innerHTML = '<em>Loading answers...</em>';
+
+  try {
+    const response = await fetch(`/questions/${questionId}`);
+    if (!response.ok) {
+      throw new Error('Failed to load answers');
+    }
+    const data = await response.json();
+
+    // Render answers
+    if (data.answers.length === 0) {
+      container.innerHTML = '<em>No answers yet.</em>';
+    } else {
+      container.innerHTML = data.answers.map(a => `
+        <div style="border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px;">
+          <div>
+            ${a.text}
+          </div>
+          <div style="font-size:0.9em; color:#666;">
+            Answered by: <strong>${a.answer_author}</strong> • 
+            Votes: ${a.votes} •
+            ${a.accepted ? '✅ Accepted' : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+  } catch (err) {
+    container.innerHTML = `<em>Error: ${err.message}</em>`;
+    console.error('Failed to load answers:', err);
+  }
 }
 
 // Handle form submission
