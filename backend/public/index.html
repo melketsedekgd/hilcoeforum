@@ -33,7 +33,11 @@ function loadQuestions() {
     </div>
     <div>Category: ${q.category || 'general'}</div>
     <div>Answers: ${q.answer_count}</div>
-    <div>Votes: ${q.votes}</div>
+    <div>
+      <button onclick="vote('question', ${q.id}, 'up')" style="font-size:18px;">▲</button>
+      <span id="votes-question-${q.id}">${q.votes}</span>
+      <button onclick="vote('question', ${q.id}, 'down')" style="font-size:18px;">▼</button>
+    </div>
     <div>Asked by: <strong>${q.username}</strong></div>
     <!-- NEW: View Answers button -->
     <button onclick="viewAnswers(${q.id})" style="margin-top:8px;">View Answers</button>
@@ -79,6 +83,18 @@ async function viewAnswers(questionId) {
     container.innerHTML = `<em>Error: ${err.message}</em>`;
     console.error('Failed to load answers:', err);
   }
+}
+
+function vote(id, direction) {
+  fetch(`/questions/${id}/vote`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ direction })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById(`question-votes-${id}`).textContent = data.votes;
+  });
 }
 
 // Handle form submission

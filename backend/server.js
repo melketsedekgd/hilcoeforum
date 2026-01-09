@@ -151,7 +151,54 @@ server.get('/questions/:id', (req, res) => {
 });
 })
 
+server.get('/questions/:id/vote', (req,res) => {
+  
+  // EXTRACTION
+  const question_id = req.params.id;
+  const direction = req.body.direction;
+  
+  
+  // VALIDATION 
+  if (!question_id || isNaN(question_id)) {
+    return res.status(400).json({ error: 'Invalid question ID' });
+  }
+  if (direction !== 'up' && direction !== 'down') {
+    return res.status(400).json({ error: 'Direction must be "up" or "down"' });
+  }
+  // 
+  let change = 0 
+  if (directtion === 'up')
+    change = 1
+  else if (directtion === 'down')
+    change = -1
 
+  // db.run() → on success → db.get() → on success → res.json()
+  db.run('UPDATE questions SET votes = votes + ? WHERE id = ? ',
+    [change,question_id], 
+   function(err) {
+      if (err) {
+        return res.status(500).json({ error: 'Database error' });
+      }
+      if (this.changes === 0) {
+        return res.status(404).json({ error: 'Question not found' });
+      }
+
+      // 3. Fetch the new vote count
+      db.get('SELECT votes FROM questions WHERE id = ?', [questionId], (err, row) => {
+        if (err) {
+          return res.status(500).json({ error: 'Failed to fetch votes' });
+        }
+        res.json({ votes: row.votes });
+      });
+    }
+  )
+  
+
+  db.get('SELECT votes FROM questions WHERE id = ?', [question_id], (err,row) => {
+    res.json({ votes: row.votes });
+  })
+  
+})
 
 server.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
