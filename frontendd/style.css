@@ -1,0 +1,21 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+.app-container{
+    display: flex;
+    flex-direction:row;
+    height: 100vh;
+    width: 100%;
+}
+.sidebar {
+  /* What width? Should it shrink/grow? */
+    flex:20;
+}
+
+.main-content {
+  /* How do we make it take remaining space? */
+    flex: 80;
+}
