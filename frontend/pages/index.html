@@ -9,55 +9,63 @@
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/main.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 </head>
 <body>
 
 <div class="app-layout">
 
   <aside class="sidebar">
-    <div class="logo-container">
+    <div class="logo-container" style="margin-bottom:1rem;">
       <img src="hilcoe-logo.png" alt="HiLCoE Logo">
     </div>
 
     <nav class="nav-menu">
+      <div class="nav-section">
         <p class="nav-label">NAVIGATION</p>
-        <button onclick="loadPage('./home.html')">🏠 Home</button>
-        <!-- Remember this is to call a function to call stg else there is no popular.html -->
-        <button onclick="loadPage('#')">🔥 Popular</button>
-        <button onclick="loadPage('./about.html')">ℹ️ About</button>
+        <button onclick="loadPage('./home.html')" class="nav-item active"><span class="material-icons">home</span><span>Home</span></button>
+        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">whatshot</span><span>Popular</span></button>
+        <button onclick="loadPage('./about.html')" class="nav-item"><span class="material-icons">info</span><span>About</span></button>
+      </div>
 
-        <!-- THis are not html files either they are to be connected to the backend to retrieve the categorical search -->
+      <!-- FAVORITES inserted between NAVIGATION and CATEGORIES -->
+      <div class="nav-section">
+        <p class="nav-label">FAVORITES</p>
+        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">star</span><span>Saved</span></button>
+        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">bookmark</span><span>Bookmarks</span></button>
+      </div>
+
+      <div class="nav-section">
         <p class="nav-label">CATEGORIES</p>
-
-        <button onclick="loadPage('#')" class="nav-item">
-            <span class="material-icons">code</span>
-            Developer
-        </button>
-        <button onclick="loadPage('#')" class="nav-item">
-            <span class="material-icons">security</span>
-            Cyber Security
-        </button>
-
+        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">menu_book</span><span>Courses</span></button>
+        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">code</span><span>Developer</span></button>
+        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">security</span><span>Cyber Security</span></button>
+        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">school</span><span>Tech School</span></button>
+        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">local_florist</span><span>About Life</span></button>
+        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">emoji_events</span><span>Events</span></button>
+        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">hardware</span><span>IoT & Hardware</span></button>
+      </div>
     </nav>
   </aside>
 
   <main class="main-content">
     <header class="top-header">
-        <div class="search-bar">
-            <span class="material-icons search-icon">search</span>
-            <input type="text" placeholder="Search questions..." />
-        </div>
+      <div class="header-left">
+        <button id="sidebar-toggle" class="btn" aria-label="Toggle sidebar"><span class="material-icons">menu</span></button>
+        <div class="logo-small" style="display:none;"><img src="hilcoe-logo.png" alt="HiLCoE" style="height:34px;"></div>
+      </div>
 
-        <div class="header-actions">
-            <button class="btn btn-primary" onclick="loadPage('./askquestions.html')">✨ Ask Question</button>
-            <button class="btn" onclick="loadPage('./login.html')">Login</button>
-            <button class="icon-btn" id="theme-toggle">
-                <span class="material-icons" id="theme-icon">dark_mode</span>
-            </button>
-        </div>
+      <div class="search-bar" role="search" aria-label="Search">
+        <span class="material-icons" style="color:var(--muted)">search</span>
+        <input type="search" placeholder="Search questions, topics, or users..." aria-label="Search">
+      </div>
+
+      <div class="header-actions">
+        <button class="btn" onclick="loadPage('./login.html')" aria-label="Open account">
+          <span class="material-icons" style="font-size:22px;color:var(--primary)">account_circle</span>
+        </button>
+        <button id="theme-toggle" class="btn" aria-label="Toggle theme"><span id="theme-icon" class="material-icons">dark_mode</span></button>
+      </div>
     </header>
-
 
     <!-- JS injects pages here -->
     <div id="content-display"></div>
