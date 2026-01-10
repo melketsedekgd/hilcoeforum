@@ -1,33 +1,54 @@
 <!-- This is where the home page content will be loaded dynamically -->
  <!-- You guys can replace this with dynamic content -->
 <div class="page-container">
-    <div class="content-header">
-        <h2> Recent Questions</h2>
-        <div class="sort-filters">
-            <button class="filter-btn active">New</button>
-            <button class="filter-btn">Top</button>
-            <button class="filter-btn">Hot</button>
+  <div class="content-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+    <div>
+      <h2 style="display:flex;align-items:center;gap:.6rem;"><span style="font-size:1.4rem;color:var(--primary)">💡</span> Recent Questions</h2>
+      <p style="color:var(--muted);margin-top:.25rem;">Join the conversation and share knowledge with fellow students</p>
     </div>
-    <div class="question-card">
-        <div class="votes-section">
-            <button class="upvote">👍</button>
-            <span class="count">42</span>
-            <button class="downvote">👎</button>
-        </div>
-        <div class="card-main">
-
-            <h3 class="question-title">How do I center a div in CSS?</h3>
-            <p class="question-excerpt">I've been trying to center a div element both horizontally and vertically...</p>
-            <div class="card-footer">
-                <span class="tag developer">Developer</span>
-                <span class="answers-count">8 answers</span>
-                <span class="views-count">1.2k views</span>
-                <span class="solved-tag">Solved</span>
-                <span class="author">Sarah K.</span>
-            </div>
-
-        </div>
+    <div class="sort-filters">
+      <button class="filter-btn active"><span class="material-icons">whatshot</span><span>Hot</span></button>
+      <button class="filter-btn"><span class="material-icons">fiber_new</span><span>New</span></button>
+      <button class="filter-btn"><span class="material-icons">emoji_events</span><span>Top</span></button>
     </div>
-</div>
+  </div>
 
+  <!-- Example question card with votes column under small thumbs -->
+  <div class="question-card">
+      <div class="votes-section" aria-hidden="true">
+          <button class="upvote" title="Upvote">▲</button>
+          <span class="count">42</span>
+          <button class="downvote" title="Downvote">▼</button>
+      </div>
+      <div class="card-main">
+          <h3 class="question-title">How do I center a div in CSS?</h3>
+          <p class="question-excerpt">I've been trying to center a div element both horizontally and vertically. What's the best modern approach?</p>
+          <div class="card-footer">
+              <span class="tag">Developer</span>
+              <span>• 8 answers</span>
+              <span>• 1.2k views</span>
+              <span class="solved-tag">Solved</span>
+              <span style="margin-left:auto;color:var(--muted);">Sarah K.</span>
+          </div>
+      </div>
+  </div>
+
+  <!-- duplicate card for visual list -->
+  <div class="question-card">
+      <div class="votes-section" aria-hidden="true">
+          <button class="upvote" title="Upvote">▲</button>
+          <span class="count">31</span>
+          <button class="downvote" title="Downvote">▼</button>
+      </div>
+      <div class="card-main">
+          <h3 class="question-title">What's the difference between let and const in JavaScript?</h3>
+          <p class="question-excerpt">I keep seeing both let and const in modern JavaScript code. When should I use each one?</p>
+          <div class="card-footer">
+              <span class="tag">Courses</span>
+              <span>• 5 answers</span>
+              <span>• 892 views</span>
+              <span style="margin-left:auto;color:var(--muted);">John D.</span>
+          </div>
+      </div>
+  </div>
 </div>
