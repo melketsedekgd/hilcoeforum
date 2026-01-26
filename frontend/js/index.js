@@ -341,3 +341,18 @@ document.addEventListener('submit', (e)=>{
     }
   }
 });
+// defalult load home page
+window.addEventListener("DOMContentLoaded", () => {
+  loadPage("./home.html");
+});
+
+
+// MELKE MELKE MELKE MELKE MELKE MELKE MELKE MELKE MELKE
+
+// MELKE MELKE MELKE MELKE MELKE MELKE MELKE MELKE MELKE
+
+// MELKE MELKE MELKE MELKE MELKE MELKE MELKE MELKE MELKE
+
+// MELKE MELKE MELKE MELKE MELKE MELKE MELKE MELKE MELKE
+
+// MELKE MELKE MELKE MELKE MELKE MELKE MELKE MELKE MELKE
