@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Q&A App</title>
-</head>
-<body>
-  <h1>Ask a Question</h1>
-  <form id="questionForm">
-    <input type="text" id="title" placeholder="Question title" required />
-    <input type="text" id="category" placeholder="Category" />
-    <input type="number" id="authorId" placeholder="Your User ID" required />
-    <button type="submit">Post Question</button>
-  </form>
 
-  <h2>Recent Questions</h2>
-  <ul id="questionsList"></ul>
-
-  <script>
     // We'll add JavaScript here to talk to your API
     // Load questions when page loads
 function loadQuestions() {
@@ -123,6 +104,3 @@ document.getElementById('questionForm').addEventListener('submit', async (e) => 
 
 // Load questions on start
 loadQuestions();
-  </script>
-</body>
-</html>
