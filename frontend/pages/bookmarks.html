@@ -1,0 +1,43 @@
+<!-- Bookmarks page -->
+<div class="page-container">
+  <div class="content-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+    <div>
+      <h2 style="display:flex;align-items:center;gap:.6rem;"><span style="font-size:1.4rem;color:var(--primary)">🔖</span> Bookmarks</h2>
+      <p style="color:var(--muted);margin-top:.25rem;">Saved questions you bookmarked for later</p>
+    </div>
+  </div>
+
+  <div id="bookmarks-list" class="surface" style="padding:1rem; min-height:160px;">
+    <p class="muted">Loading your bookmarks...</p>
+  </div>
+</div>
+
+<script>
+  // populate bookmarks when the page is loaded into content area
+  (function(){
+    function render(){
+      const wrap = document.getElementById('bookmarks-list');
+      if(!wrap) return;
+      const ids = JSON.parse(localStorage.getItem('hl_bookmarks')||'[]');
+      if(!ids.length){ wrap.innerHTML = '<p class="muted">No bookmarks yet — bookmark questions from the home list.</p>'; return; }
+      const items = ids.map(id=>{
+        const q = window.QUESTIONS && window.QUESTIONS[id];
+        const title = q ? q.title : id;
+        return `
+          <div class="card" style="margin-bottom:.6rem; display:flex; align-items:center; justify-content:space-between; gap:1rem;">
+            <div>
+              <strong>${title}</strong>
+              <div class="muted">${q? (q.tag + ' • ' + q.author) : ''}</div>
+            </div>
+            <div style="display:flex;gap:.5rem;align-items:center;">
+              <button class="btn--glass" onclick="openQuestion('${id}')">Open</button>
+              <button class="btn" onclick="(function(id){ removeBookmark(id); location.reload(); })('${id}')">Remove</button>
+            </div>
+          </div>`;
+      }).join('');
+      wrap.innerHTML = items;
+    }
+    // small delay to allow content injection
+    setTimeout(render, 80);
+  })();
+</script>
