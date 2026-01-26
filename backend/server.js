@@ -1,9 +1,16 @@
 const express = require('express');
 const db = require('./db')
+const cors = require('cors');
+
+
 const server = express();
 // When someone visits http://localhost:3000/, Express will look for public/index.html and send it automatically.
+
 server.use(express.static('public'));
 const port = 3000;
+server.use(cors()); // This allows your frontend to talk to this server
+
+
 
 // This creates an Express application instance.
 server.use(express.json());
@@ -14,14 +21,28 @@ server.get('/', (req, res) => {
 });
 
 server.get('/questions', (req, res) => {
-  db.all('SELECT * FROM questions', (err, rows) => {
-    if (err) {
-      // If something goes wrong, send an error
-      return res.status(500).json({ error: err.message });
-    }
-    // If successful, send the data
-    res.json(rows);
-  });
+  db.all(`
+  SELECT 
+    q.id,
+    q.title,
+    q.category,
+    q.author_id,
+    u.username,               -- ← new!
+    q.votes,
+    q.created_at,
+    COUNT(a.id) AS answer_count,
+    MAX(a.accepted) AS has_accepted_answer
+  FROM questions q
+  JOIN users u ON q.author_id = u.id      -- ← join users
+  LEFT JOIN answers a ON q.id = a.question_id
+  GROUP BY q.id
+  ORDER BY q.created_at DESC
+`, (err, questions) => {
+  if (err) {
+    return res.status(500).json({ error: err.message });
+  }
+  res.json(questions);
+});
 });
 
 server.get('/db-test', (req, res) => {
@@ -120,18 +141,53 @@ server.get('/questions/:id', (req, res) => {
       return res.status(404).json({ error: 'Question not found' });
     }
 
-    // Fetch answers for this question
-    db.all('SELECT * FROM answers WHERE question_id = ?', [questionId], (err, answers) => {
+    // Fetch answers WITH author usernames
+    db.all(`
+      SELECT a.*, u.username AS answer_author
+      FROM answers a
+      JOIN users u ON a.author_id = u.id
+      WHERE a.question_id = ?
+      ORDER BY a.created_at ASC
+    `, [questionId], (err, answers) => {
       if (err) {
         return res.status(500).json({ error: err.message });
       }
 
-      // Combine question and answers into one response
       res.json({ ...question, answers });
     });
-  });
 });
+})
 
+server.post('/questions/:id/vote', (req, res) => {
+  const question_id = req.params.id;
+  const direction = req.body.direction;
+
+  if (!question_id || isNaN(question_id)) {
+    return res.status(400).json({ error: 'Invalid question ID' });
+  }
+  if (direction !== 'up' && direction !== 'down') {
+    return res.status(400).json({ error: 'Direction must be "up" or "down"' });
+  }
+
+  const change = direction === 'up' ? 1 : -1;
+
+  db.run('UPDATE questions SET votes = votes + ? WHERE id = ? ',
+    [change, question_id],
+    function (err) {
+      if (err) {
+        return res.status(500).json({ error: 'Database error' });
+      }
+      if (this.changes === 0) {
+        return res.status(404).json({ error: 'Question not found' });
+      }
+
+      db.get('SELECT votes FROM questions WHERE id = ?', [question_id], (err, row) => {
+        if (err) return res.status(500).json({ error: 'Failed to fetch votes' });
+        res.json({ votes: row.votes });
+      });
+    }
+  );
+});
 
 server.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
