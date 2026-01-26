@@ -98,9 +98,9 @@ function populateQuestionFromGlobals(){
       card.innerHTML = `${ans.accepted?'<div class="badge-accepted">✓ Accepted</div>':''}
         <p>${ans.text}</p>
         <div class="votes-section">
-          <button class="upvote">👍</button>
+          <button class="upvote" title="Upvote"><span class="material-icons">arrow_upward</span></button>
           <span class="count">${ans.votes}</span>
-          <button class="downvote">👎</button>
+          <button class="downvote" title="Downvote"><span class="material-icons">arrow_downward</span></button>
         </div>
         <div class="author">By ${ans.author}</div>`;
       answersSection.appendChild(card);
