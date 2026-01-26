@@ -14,41 +14,43 @@
   </div>
 
   <!-- Example question card with votes column under small thumbs -->
-  <div class="question-card">
-      <div class="votes-section" aria-hidden="true">
-          <button class="upvote" title="Upvote">▲</button>
+    <div class="question-card" data-id="q1">
+        <div class="votes-section" aria-hidden="true">
+          <button class="upvote" title="Upvote"><span class="material-icons">arrow_upward</span></button>
           <span class="count">42</span>
-          <button class="downvote" title="Downvote">▼</button>
-      </div>
+          <button class="downvote" title="Downvote"><span class="material-icons">arrow_downward</span></button>
+        </div>
       <div class="card-main">
-          <h3 class="question-title">How do I center a div in CSS?</h3>
-          <p class="question-excerpt">I've been trying to center a div element both horizontally and vertically. What's the best modern approach?</p>
-          <div class="card-footer">
-              <span class="tag">Developer</span>
-              <span>• 8 answers</span>
-              <span>• 1.2k views</span>
-              <span class="solved-tag">Solved</span>
-              <span style="margin-left:auto;color:var(--muted);">Sarah K.</span>
-          </div>
+          <h3 class="question-title"><button class="link-like" onclick="openQuestion('q1')">How do I center a div in CSS?</button></h3>
+        <p class="question-excerpt">I've been trying to center a div element both horizontally and vertically. What's the best modern approach?</p>
+        <div class="card-footer">
+          <span class="tag">Developer</span>
+          <span>• 8 answers</span>
+          <span>• 1.2k views</span>
+          <span class="solved-tag">Solved</span>
+          <button class="btn--glass bookmark" title="Bookmark"><span class="material-icons">bookmark_border</span></button>
+          <span style="margin-left:auto;color:var(--muted);">Sarah K.</span>
+        </div>
       </div>
-  </div>
+    </div>
 
   <!-- duplicate card for visual list -->
-  <div class="question-card">
-      <div class="votes-section" aria-hidden="true">
-          <button class="upvote" title="Upvote">▲</button>
+    <div class="question-card" data-id="q2">
+        <div class="votes-section" aria-hidden="true">
+          <button class="upvote" title="Upvote"><span class="material-icons">arrow_upward</span></button>
           <span class="count">31</span>
-          <button class="downvote" title="Downvote">▼</button>
-      </div>
+          <button class="downvote" title="Downvote"><span class="material-icons">arrow_downward</span></button>
+        </div>
       <div class="card-main">
-          <h3 class="question-title">What's the difference between let and const in JavaScript?</h3>
-          <p class="question-excerpt">I keep seeing both let and const in modern JavaScript code. When should I use each one?</p>
-          <div class="card-footer">
-              <span class="tag">Courses</span>
-              <span>• 5 answers</span>
-              <span>• 892 views</span>
-              <span style="margin-left:auto;color:var(--muted);">John D.</span>
-          </div>
+          <h3 class="question-title"><button class="link-like" onclick="openQuestion('q2')">What's the difference between let and const in JavaScript?</button></h3>
+        <p class="question-excerpt">I keep seeing both let and const in modern JavaScript code. When should I use each one?</p>
+        <div class="card-footer">
+          <span class="tag">Courses</span>
+          <span>• 5 answers</span>
+          <span>• 892 views</span>
+          <button class="btn--glass bookmark" title="Bookmark"><span class="material-icons">bookmark_border</span></button>
+          <span style="margin-left:auto;color:var(--muted);">John D.</span>
+        </div>
       </div>
-  </div>
+    </div>
 </div>

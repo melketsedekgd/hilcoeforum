@@ -1,6 +1,8 @@
 /* Global Styles */
 :root{
-  --primary: #2563eb;
+  --primary: #3B82F6;
+  --navy: #0b2340;
+  --accent-2: #60a5fa;
   --accent: #16a34a;
   --bg: #f9fafb;
   --surface: #ffffff;
@@ -10,6 +12,14 @@
   --max-width: 1200px;
   --radius: 10px;
   --border: #e6e9ee;
+}
+
+/* new utility for logo text to keep HTML minimal */
+.logo-text{
+  font-weight:800;
+  color: var(--primary);
+  letter-spacing: .6px;
+  font-size:1.15rem;
 }
 
 /* --- color mode via prefers-color-scheme (default automatic) --- */
@@ -76,10 +86,10 @@ p{
   box-shadow: 0 6px 18px rgba(16,24,40,0.04);
 }
 
-/* dark mode adjustments for interactive elements */
-body.dark .search-bar,
-body.dark .card-main,
-body.dark input, body.dark textarea, body.dark select {
+/* dark mode adjustments for interactive elements (use data-theme) */
+body[data-theme="dark"] .search-bar,
+body[data-theme="dark"] .card-main,
+body[data-theme="dark"] input, body[data-theme="dark"] textarea, body[data-theme="dark"] select {
   background: #161616;
   border-color: #2b2b2b;
   color: var(--text);

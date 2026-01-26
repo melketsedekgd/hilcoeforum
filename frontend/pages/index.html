@@ -13,10 +13,11 @@
 <body>
 
 <div class="app-layout">
+  <a class="skip-link" href="#content-display">Skip to content</a>
 
   <aside class="sidebar">
     <div class="logo-container" style="margin-bottom:1rem;">
-      <img src="hilcoe-logo.png" alt="HiLCoE Logo">
+      <div class="logo-text">HiLoceForum</div>
     </div>
 
     <nav class="nav-menu">
@@ -24,13 +25,7 @@
         <p class="nav-label">NAVIGATION</p>
         <button onclick="loadPage('./home.html')" class="nav-item active"><span class="material-icons">home</span><span>Home</span></button>
         <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">whatshot</span><span>Popular</span></button>
-        <button onclick="loadPage('./about.html')" class="nav-item"><span class="material-icons">info</span><span>About</span></button>
-      </div>
-
-      <div class="nav-section">
-        <p class="nav-label">FAVORITES</p>
-        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">star</span><span>Saved</span></button>
-        <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">bookmark</span><span>Bookmarks</span></button>
+        <button onclick="loadPage('./bookmarks.html')" class="nav-item"><span class="material-icons">bookmark</span><span>Bookmarks</span></button>
       </div>
 
       <div class="nav-section">
@@ -42,6 +37,11 @@
         <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">local_florist</span><span>About Life</span></button>
         <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">emoji_events</span><span>Events</span></button>
         <button onclick="loadPage('#')" class="nav-item"><span class="material-icons">hardware</span><span>IoT & Hardware</span></button>
+      </div>
+
+      <div class="nav-section">
+        <p class="nav-label">ABOUT</p>
+        <button onclick="loadPage('./about.html')" class="nav-item"><span class="material-icons">info</span><span>About</span></button>
       </div>
     </nav>
   </aside>
@@ -68,6 +68,7 @@
 
     <!-- JS injects pages here -->
     <div id="content-display"></div>
+    <div id="hl-aria-live" aria-live="polite" style="position:absolute;left:-9999px;top:auto;height:1px;overflow:hidden"> </div>
   </main>
 
 </div>
