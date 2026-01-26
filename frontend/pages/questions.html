@@ -38,6 +38,20 @@
         </div>
     </section>
 
+        <!-- Template used by JS to render answers dynamically -->
+        <template id="answer-template">
+            <div class="answer-card">
+                <div class="badge-accepted" style="display:none">✓ Accepted</div>
+                <p class="answer-text"></p>
+                <div class="votes-section">
+                    <button class="upvote" title="Upvote"><span class="material-icons">arrow_upward</span></button>
+                    <span class="count">0</span>
+                    <button class="downvote" title="Downvote"><span class="material-icons">arrow_downward</span></button>
+                </div>
+                <div class="author">By </div>
+            </div>
+        </template>
+
     <div class="reply-box">
         <h3>✍️ Your Answer</h3>
         <textarea placeholder="Write your answer here..."></textarea>
