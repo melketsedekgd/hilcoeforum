@@ -161,6 +161,89 @@ function showAboutUs() {
     aboutView.style.display = 'block';
 
     aboutView.innerHTML = `
+            <div class="post-detail">
+                <div class="detail-card">
+                    <h1 class="detail-title">
+                        <span class="about-icon">${icons.info}</span>
+                        About Us
+                    </h1>
+                    <p class="detail-content">
+                        Hilcoe Forum is a student-driven discussion platform built to help learners,
+                        developers, and creators ask better questions, share real knowledge, and
+                        grow together as a community.
+                    </p>
+
+                <p class="detail-content">
+                    Inspired by platforms like Stack Overflow and Reddit, Hive focuses on
+                    clarity, collaboration, and learning by doing — not just consuming.
+                </p>
+            </div>
+            <div class="detail-card">
+                <h2 class="detail-title">
+                    <span class="about-icon">${icons.lightbulb}</span>
+                    Our Mission
+                </h2>
+                <p class="detail-content">
+                    To empower students and developers to learn faster by asking freely,
+                    answering honestly, and building knowledge together in a respectful space.
+                </p>
+            </div>
+
+            <div class="detail-card">
+                <h2 class="detail-title">
+                    <span class="about-icon">${icons.users}</span>
+                    What Makes Hive Different
+                </h2>
+                <ul class="detail-content">
+                    <li>✔ Student-focused discussions</li>
+                    <li>✔ Real projects, real problems</li>
+                    <li>✔ Clean UI, no distractions</li>
+                    <li>✔ Built by students, for students</li>
+                </ul>
+            </div>
+
+            <div class="detail-card">
+                <h2 class="detail-title">
+                    <span class="about-icon">${icons.github}</span>
+                    Contributors
+                </h2>
+
+                <div class="contributors">
+
+                    <div class="contributor">
+                        <strong>Samuel Mifta</strong>
+                        <div class="contributor-links">
+                            <a href="https://github.com/Sami7ma" target="_blank" title="GitHub">
+                                ${icons.github}
+                            </a>
+                            <a href="https://t.me/sami7ma" target="_blank" title="Telegram">
+                                ${icons.telegram}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contributor">
+                        <strong>Melketsedik Getener</strong>
+                        <div class="contributor-links">
+                            <a href="https://github.com/melketsedekgd" target="_blank">
+                                ${icons.github}
+                            </a>
+                            <a href="https://t.me/melkegd" target="_blank">
+                                ${icons.telegram}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contributor">
+                        <strong>Ruth Daniel</strong>
+                        <div class="contributor-links">
+                            <a href="https://github.com/Ruthdme" target="_blank">
+                                  <img src="path/to/github-logo.svg" alt="GitHub Logo" />
+                            </a>
+                            <a href="https://t.me/ruthTeffera" target="_blank">
+                            ${icons.telegram}
+                            </a>
+                        </div>
+                    </div>
 <div class="post-detail">
 
     <div class="detail-card">
