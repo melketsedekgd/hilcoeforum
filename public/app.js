@@ -53,7 +53,6 @@ const sidebar = document.getElementById('sidebar');
 const categoriesNav = document.getElementById('categoriesNav');
 const postsList = document.getElementById('postsList');
 const categoryTitle = document.getElementById('categoryTitle');
-const postCount = document.getElementById('postCount');
 const newPostBtn = document.getElementById('newPostBtn');
 const newPostModal = document.getElementById('newPostModal');
 const closeModalBtn = document.getElementById('closeModalBtn');
@@ -156,7 +155,6 @@ function renderPosts() {
         ? 'All Discussions'
         : `${categories.find(c => c.id === state.selectedCategory)?.name || 'Category'} Discussions`;
 
-    postCount.textContent = `${filtered.length} posts`;
 
     if (filtered.length === 0) {
         postsList.innerHTML = `<p class="no-results">No matching discussions found</p>`;
