@@ -638,9 +638,6 @@ body.dark-mode .sort-btn.active {
     transition: color var(--transition-fast);
 }
 
-.stat:hover {
-    color: rgb(152, 83, 83);
-}
 
 .stat svg {
     width: 16px;

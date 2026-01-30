@@ -594,16 +594,74 @@ document.getElementById('authForm')?.addEventListener('submit', async e => {
     }
 
     messageEl.textContent = isSignup ? 'Check your email to confirm!' : 'Logged in successfully!';
-    messageEl.className = 'auth-message success';
+        messageEl.className = 'auth-message success';
 
-    if (!isSignup) {
-        state.currentUser = {
-            id: data.user.id,
-            email: data.user.email,
-            username: data.user.user_metadata?.username || 'User'
-        };
-        setTimeout(closeAuthModal, 1500);
-    }
+        const { data: { user } } = await supabase.auth.getUser();  // Always get fresh user object
+
+        if (user) {
+            // ── NEW: Ensure profile exists in users table ──
+            const { data: profile, error: profileError } = await supabase
+                .from('users')
+                .select('id, username')
+                .eq('id', user.id)
+                .maybeSingle();  // No error if no row
+
+            if (profileError) {
+                console.error('Profile check failed:', profileError);
+            }
+
+            if (!profile) {
+                // No profile → create one
+                let usernameToUse = user.user_metadata?.username;
+
+                // Fallbacks if metadata is missing (common for old users)
+                if (!usernameToUse) {
+                    usernameToUse = user.email?.split('@')[0] || `user_${user.id.slice(0, 8)}`;
+                }
+
+                const { error: insertError } = await supabase
+                    .from('users')
+                    .insert({
+                        id: user.id,
+                        username: usernameToUse,
+                        created_at: new Date().toISOString()  // optional
+                    });
+
+                if (insertError) {
+                    console.error('Failed to create user profile:', insertError);
+                    // Optional: show message to user
+                    messageEl.textContent += ' (Profile setup issue – try refreshing)';
+                } else {
+                    console.log('Created missing profile for user');
+                    // Re-fetch profile to update state
+                    const { data: newProfile } = await supabase
+                        .from('users')
+                        .select('username')
+                        .eq('id', user.id)
+                        .single();
+                    usernameToUse = newProfile?.username || usernameToUse;
+                }
+
+                // Update state with final username
+                state.currentUser = {
+                    id: user.id,
+                    email: user.email,
+                    username: usernameToUse
+                };
+            } else {
+                // Profile exists → use its username (more reliable than metadata)
+                state.currentUser = {
+                    id: user.id,
+                    email: user.email,
+                    username: profile.username || user.user_metadata?.username || 'User'
+                };
+            }
+        }
+
+        if (!isSignup) {
+            setTimeout(closeAuthModal, 1500);
+        }
+
 });
 
 // Handle New Post
