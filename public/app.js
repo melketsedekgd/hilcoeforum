@@ -396,6 +396,7 @@ function closeAuthModal() {
     document.getElementById('authModal').style.display = 'none';
     document.body.style.overflow = '';
 }
+window.closeAuthModal = closeAuthModal;
 
 // Handle form submission (sign in or sign up)
 document.getElementById('authForm')?.addEventListener('submit', async e => {
@@ -482,8 +483,9 @@ async function handleNewPost(e) {
     if (error) {
     alert('Failed to post: ' + error.message);
     } else {
+    closeNewPostModal();
     alert('Question posted!');
-    loadQuestions();
+    await loadQuestions();
     }
 }
 
@@ -620,6 +622,14 @@ async function init() {
     document.getElementById('searchInput')?.addEventListener('input', e => {
         state.searchQuery = e.target.value;
         renderPosts();
+    });
+    const authCloseBtn = document.querySelector('#authModal .close-modal');
+    authCloseBtn?.addEventListener('click', closeAuthModal);
+
+    // Optional: click outside modal to close
+    const authModal = document.getElementById('authModal');
+    authModal?.addEventListener('click', e => {
+        if (e.target === authModal) closeAuthModal();
     });
 }
 

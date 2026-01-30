@@ -985,6 +985,12 @@ body.dark-mode .sort-btn.active {
     cursor: pointer;
     font-weight: 500;
 }
+.auth-switch button:hover {
+    color: #2563eb;
+    text-decoration: underline; 
+    transition: color 0.2s ease;
+}
+
 
 .auth-message {
     margin-top: 1rem;
