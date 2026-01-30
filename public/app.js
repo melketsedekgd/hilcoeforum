@@ -29,7 +29,7 @@ const categories = [
     { id: "projects",   name: "Projects",     icon: "lightbulb"},
     { id: "career",     name: "Career",       icon: "briefcase"},
     { id: "general",    name: "General",      icon: "coffee"   },
-    { id: "about",      name: "About Hive",   icon: "info"    }
+    { id: "about",      name: "About Us",   icon: "info"    }
 ];
 
 // ICON
