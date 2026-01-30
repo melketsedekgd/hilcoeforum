@@ -129,6 +129,12 @@ function renderCategories() {
 
 // Select Category
 function selectCategory(categoryId) {
+    // if leaving about we gotta back to normal some how
+    if (state.selectedCategory === 'about' && categoryId !== 'about') {
+        postListView.style.display = 'block';
+        postDetailView.style.display = 'none';
+    }
+
     if (categoryId === 'about') {
         showAboutUs();
         closeMobileMenu();
@@ -202,6 +208,7 @@ function showAboutUs() {
 
 // Render Posts
 function renderPosts() {
+    
     // trying to make sure about view dont show
     const aboutView = document.getElementById('aboutView');
     if (state.selectedCategory !== 'about') {
