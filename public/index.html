@@ -60,12 +60,14 @@
                     </svg>
                 </button> -->
                
-                <button class="icon-btn" aria-label="User profile" onclick="openAuthModal()">
+                <button id="authButton" class="icon-btn" aria-label="User profile or sign in">
+                    <!-- Initial content: sign-in icon -->
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                 </button>
+
             </div>
         </div>
     </header>
@@ -81,19 +83,19 @@
             <nav class="categories" id="categoriesNav">
                 <!-- Categories will be injected by JS -->
             </nav>
-            <nav class="aboutus" id="aboutusNav">
-            </nav>
         </aside>
 
         <!-- Main Content Area -->
         <main class="content" id="mainContent">
-
             <section id="aboutView" style="display:none;"></section>
             <!-- Post List View -->
             <div id="postListView">
 
                 <div class="content-header">
                     <h2 id="categoryTitle">All Discussions</h2>
+                    
+                    <span class="post-count" id="postCount">0 posts</span>
+
                     <!-- Sort toggle buttons -->
                     <div class="sort-toggle">
                         <button 
@@ -172,7 +174,7 @@
     <!-- Login / Sign Up Modal -->
     <div id="authModal" class="modal">
         <div class="modal-content auth-modal-content">
-            <button class="close-modal" id="authCloseBtn">×</button>
+            <button class="close-modal" onclick="closeAuthModal()">X</button>
             
             <h2 id="authTitle">Sign In</h2>
             <p id="authSubtitle">to post questions, reply, or vote</p>
@@ -220,6 +222,7 @@
             <div id="authMessage" class="auth-message"></div>
         </div>
     </div>
+
     <script type="module" src="app.js"></script>
 
 </body>
