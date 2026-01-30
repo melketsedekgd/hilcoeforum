@@ -44,7 +44,9 @@ const icons = {
     thumbsUp: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>',
     messageCircle: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>',
     share: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>',
-    info: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8"  x2="12.01" y2="8"></line></svg>`
+    info: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8"  x2="12.01" y2="8"></line></svg>`,
+    github: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3"/><path d="M15 19c5 1.5 5-2.5 7-3"/><path d="M12 2c5.5 0 10 3.5 10 9 0 4.5-3 8-7 9 v-3c0-1-.5-2-1.5-2 3.5-.5 7-2 7-6 0-1.5-.5-3-1.5-4"/></svg>`,
+    telegram: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4z"/></svg>`
 };
 
 // DOM Elements
@@ -113,7 +115,7 @@ function updateCategoryCounts() {
 // Render Categories on sidebar :)
 function renderCategories() {
     categoriesNav.innerHTML = categories.map(cat => {
-        const count = state.categoryCounts[cat.id] ?? 0;
+        const count = cat.id === 'about' ? null : (state.categoryCounts[cat.id]??0);
         return `
             <button class="category-btn ${state.selectedCategory === cat.id ? 'active' : ''}" 
                     onclick="selectCategory('${cat.id}')">
@@ -121,7 +123,7 @@ function renderCategories() {
                     <div class="category-icon">${icons[cat.icon]}</div>
                     <span>${cat.name}</span>
                 </div>
-                <span class="category-count">${count}</span>
+                ${count !== null ? `<span class="category-count">${count}</span>` : ''}
             </button>
         `;
     }).join('');
@@ -159,49 +161,82 @@ function showAboutUs() {
     aboutView.style.display = 'block';
 
     aboutView.innerHTML = `
-        <div class="post-detail">
-            <div class="detail-card">
-                <h1 class="detail-title">About Hive Forum</h1>
+            <div class="post-detail">
+                <div class="detail-card">
+                    <h1 class="detail-title">About Us</h1>
+                    <p class="detail-content">
+                        Hilcoe Forum is a student-driven discussion platform built to help learners,
+                        developers, and creators ask better questions, share real knowledge, and
+                        grow together as a community.
+                    </p>
 
                 <p class="detail-content">
-                    Hive Forum is a student-centered discussion platform built to
-                    connect learners, developers, and creators in one shared space.
+                    Inspired by platforms like Stack Overflow and Reddit, Hive focuses on
+                    clarity, collaboration, and learning by doing — not just consuming.
                 </p>
-
+            </div>
+            <div class="detail-card">
+                <h2 class="detail-title">Our Mission</h2>
                 <p class="detail-content">
-                    We created Hive to make asking questions easier, sharing knowledge
-                    natural, and learning a community-driven experience.
+                    To empower students and developers to learn faster by asking freely,
+                    answering honestly, and building knowledge together in a respectful space.
                 </p>
             </div>
 
             <div class="detail-card">
-                <h2 class="detail-title">Who We Are</h2>
-                <p class="detail-content">
-                    We are students and developers who understand the challenges of
-                    learning alone. Hive Forum exists to turn individual effort into
-                    collective growth.
-                </p>
-            </div>
-
-            <div class="detail-card">
-                <h2 class="detail-title">How Hive Helps</h2>
+                <h2 class="detail-title">What Makes Hive Different</h2>
                 <ul class="detail-content">
-                    <li>✔ Ask questions and get real answers</li>
-                    <li>✔ Learn from peers and real projects</li>
-                    <li>✔ Share knowledge and experiences</li>
-                    <li>✔ Build confidence by helping others</li>
+                    <li>✔ Student-focused discussions</li>
+                    <li>✔ Real projects, real problems</li>
+                    <li>✔ Clean UI, no distractions</li>
+                    <li>✔ Built by students, for students</li>
                 </ul>
             </div>
 
             <div class="detail-card">
-                <h2 class="detail-title">Community & Staff</h2>
-                <p class="detail-content">
-                    Hive staff moderates discussions, supports users, and continuously
-                    improves the platform to keep it welcoming, respectful, and useful.
-                </p>
+                <h2 class="detail-title">Contributors</h2>
+
+                <div class="contributors">
+
+                    <div class="contributor">
+                        <strong>Samuel Mifta</strong>
+                        <div class="contributor-links">
+                            <a href="https://github.com/Sami7ma" target="_blank" title="GitHub">
+                                ${icons.github}
+                            </a>
+                            <a href="https://t.me/sami7ma" target="_blank" title="Telegram">
+                                ${icons.telegram}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contributor">
+                        <strong>Melketsedik Getener</strong>
+                        <div class="contributor-links">
+                            <a href="https://github.com/melketsedekgd" target="_blank">
+                                ${icons.github}
+                            </a>
+                            <a href="https://t.me/melkegd" target="_blank">
+                                ${icons.telegram}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contributor">
+                        <strong>Ruth Daniel</strong>
+                        <div class="contributor-links">
+                            <a href="https://github.com/Ruthdme" target="_blank">
+                                ${icons.github}
+                            </a>
+                            <a href="https://t.me/ruthTeffera" target="_blank">
+                            ${icons.telegram}
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     `;
+
 
     window.scrollTo(0, 0);
 }
