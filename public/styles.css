@@ -279,14 +279,6 @@ body {
     justify-content: center;
     transition: background-color var(--transition-fast);
 }
-.icon-btn svg {
-    transition: transform 0.2s ease;
-}
-
-.icon-btn:hover svg {
-    transform: scale(1.15) rotate(-3deg);
-}
-
 
 .icon-btn:hover {
     background-color: var(--bg-input);
@@ -474,9 +466,9 @@ body {
 }
 
 .sort-btn.active {
-    background: var(--gradient-hilcoe, #2563eb);
+    background: var(--gradient-hilcoe, #5282ea);
     color: white;
-    border-color: var(--primary-color, #2563eb);
+    border-color: var(--primary-color, #6086d8);
 }
 
 /* dark mode */
@@ -486,10 +478,17 @@ body.dark-mode .sort-btn {
 }
 
 body.dark-mode .sort-btn.active {
-    background: var(--gradient-hilcoe);
+    background: var(--gradient-hilcoe, #5282ea);
     color: white;
 }
 
+#authButton {
+    transition: transform 0.2s;
+}
+
+#authButton:hover {
+    transform: scale(1.1);
+}
 
 .post-count {
     color: var(--text-secondary);
@@ -499,12 +498,16 @@ body.dark-mode .sort-btn.active {
 /* Posts List */
 .posts-list {
     height: 80vh;
-    max-width: 896px;
-    overflow-y: auto;
+    width: 100%;                    /* ← changed: use full available width */
+    max-width: 896px;               /* still good for desktop */
     margin: 0 auto;
+    padding: 0 1rem;                /* ← add small horizontal padding on mobile */
+    overflow-y: auto;
+    overflow-x: hidden;             /* ← prevents horizontal scrollbar */
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    box-sizing: border-box;         /* important */
 }
 
 .post-card {
@@ -515,8 +518,18 @@ body.dark-mode .sort-btn.active {
     cursor: pointer;
     transition: all var(--transition-normal);
     box-shadow: var(--shadow-card);
+
+    /* ── Add these lines ── */
+    width: 100%;                    /* take full width of container */
+    min-width: 0;                   /* ← critical: allows flex to shrink long content */
+    box-sizing: border-box;         /* padding doesn't increase width */
+    /* overflow: hidden;               hide anything trying to escape horizontally */
 }
 
+.post-title, .post-content, .post-author-info, .tag {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
 .post-card:hover {
     box-shadow: var(--shadow-hover);
     border-color: rgba(37, 99, 235, 0.2);
@@ -565,13 +578,6 @@ body.dark-mode .sort-btn.active {
 .post-card:hover .post-title {
     color: #008793;
 }
-.post-card:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.08),
-        0 0 0 1px rgba(0, 135, 147, 0.15);
-}
-
 
 .post-content {
     color: var(--text-secondary);
@@ -633,7 +639,7 @@ body.dark-mode .sort-btn.active {
 }
 
 .stat:hover {
-    color: #2563eb;
+    color: rgb(152, 83, 83);
 }
 
 .stat svg {
@@ -660,6 +666,10 @@ body.dark-mode .sort-btn.active {
     border-radius: var(--radius-md);
     margin-bottom: 1rem;
     transition: background-color var(--transition-fast);
+}
+
+#newPostBtn{
+    /* background-color: var(blue,--gradient-hilcoe); */
 }
 
 .back-btn:hover {
@@ -716,7 +726,7 @@ body.dark-mode .sort-btn.active {
 .category-badge {
     padding: 0.25rem 0.75rem;
     border-radius: var(--radius-md);
-    background: var(--gradient-blue);
+    background: var(--gradient-hilcoe);
     color: white;
     font-size: 0.875rem;
 }
@@ -760,6 +770,14 @@ body.dark-mode .sort-btn.active {
     padding-top: 1rem;
     border-top: 1px solid var(--border-color);
     flex-wrap: wrap;
+
+}
+#d1,#d2{
+    color: rgb(227, 129, 129);
+}
+#d1:hover{
+    background-color: rgb(227, 129, 129);
+    color: white;
 }
 
 .action-btn {
@@ -908,21 +926,6 @@ body.dark-mode .sort-btn.active {
     overflow-y: auto;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
-.modal.active .modal-content {
-    animation: modalPop 0.25s ease forwards;
-}
-
-@keyframes modalPop {
-    from {
-        opacity: 0;
-        transform: scale(0.95) translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
 
 .modal-header {
     display: flex;
@@ -938,8 +941,8 @@ body.dark-mode .sort-btn.active {
 }
 
 .modal-close {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: var(--radius-md);
     border: none;
     background: none;
@@ -954,6 +957,25 @@ body.dark-mode .sort-btn.active {
 .modal-close:hover {
     background-color: var(--bg-input);
 }
+
+.close-modal{
+    width: 51px;
+    height: 51px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: none;
+    color: rgb(227, 129, 129);;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--transition-fast);
+}
+.close-modal:hover{
+    background-color: rgb(227, 129, 129);
+    color: white;
+}
+
 
 /* sign in modal */
 .auth-modal-content h2 {
@@ -990,7 +1012,7 @@ body.dark-mode .sort-btn.active {
 .btn.btn-primary {
     width: 100%;
     padding: 0.9rem;
-    background: var(--primary-color, #2563eb);
+    background: var(--gradient-hilcoe , #2563eb);
     color: white;
     border: none;
     border-radius: var(--radius-md);
@@ -1000,20 +1022,8 @@ body.dark-mode .sort-btn.active {
 }
 
 .btn.btn-primary:hover {
-    background: #1e40af;
+    background: var(--gradient-hilcoe , #2563eb);
 }
-.btn-primary {
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px) scale(1.01);
-    box-shadow:
-        0 8px 30px rgba(0, 135, 147, 0.35),
-        0 0 12px rgba(0, 135, 147, 0.6);
-}
-
 
 .auth-switch {
     text-align: center;
@@ -1027,36 +1037,15 @@ body.dark-mode .sort-btn.active {
     cursor: pointer;
     font-weight: 500;
 }
-.auth-switch button:hover {
-    color: #2563eb;
-    text-decoration: underline; 
-    transition: color 0.2s ease;
-}
-.auth-switch button {
-    position: relative;
-    transition: color 0.2s ease;
+
+#switchModeBtn{
+    color: rgb(89, 200, 237);
 }
 
-.auth-switch button::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0;
-    height: 2px;
-    background: var(--gradient-hilcoe);
-    transition: width 0.25s ease;
+#switchModeBtn:hover{
+    color: rgb(89, 200, 237);
+    text-decoration: wavy;
 }
-
-.auth-switch button:hover {
-    color: #008793;
-}
-
-.auth-switch button:hover::after {
-    width: 100%;
-}
-
-
 
 .auth-message {
     margin-top: 1rem;
@@ -1076,13 +1065,6 @@ body.dark-mode .sort-btn.active {
 form {
     padding: 1.5rem;
 }
-.form-input:focus,
-.form-textarea:focus {
-    box-shadow:
-        0 0 0 3px rgba(0, 135, 147, 0.15),
-        0 2px 8px rgba(0, 135, 147, 0.2);
-}
-
 
 .form-group {
     margin-bottom: 1rem;
@@ -1131,8 +1113,8 @@ form {
 
 /* Scrollbar Styles */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
 }
 
 ::-webkit-scrollbar-track {
@@ -1147,23 +1129,6 @@ form {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary);
 }
-.skeleton {
-    background: linear-gradient(
-        90deg,
-        #e5e7eb 25%,
-        #f3f4f6 37%,
-        #e5e7eb 63%
-    );
-    background-size: 400% 100%;
-    animation: shimmer 1.4s ease infinite;
-}
-
-@keyframes shimmer {
-    0% { background-position: 100% 0 }
-    100% { background-position: -100% 0 }
-}
-
-
 /* Animations */
 @keyframes fadeIn {
     from {
@@ -1176,4 +1141,115 @@ form {
 
 .fade-in {
     animation: fadeIn var(--transition-normal);
+}
+/* =========================
+   ABOUT US – POLISH & GLOW
+========================= */
+
+#aboutView {
+    animation: fadeIn 0.3s ease;
+}
+
+#aboutView .detail-card {
+    position: relative;
+    overflow: hidden;
+}
+
+/* subtle gradient accent on cards */
+#aboutView .detail-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 135, 147, 0.25),
+        transparent 40%
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Section titles */
+#aboutView h1.detail-title,
+#aboutView h2.detail-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* Icon circle next to headings */
+.about-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--gradient-hilcoe);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 6px 20px rgba(0, 135, 147, 0.35);
+}
+
+/* Mission list */
+#aboutView ul.detail-content {
+    list-style: none;
+    padding-left: 0;
+}
+
+#aboutView ul.detail-content li {
+    padding-left: 1.8rem;
+    position: relative;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+}
+
+#aboutView ul.detail-content li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    color: #008793;
+}
+
+/* Contributors */
+.contributors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.contributor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-lg);
+    background: var(--bg-input);
+    transition: all 0.25s ease;
+}
+
+.contributor:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.contributor strong {
+    font-size: 0.95rem;
+}
+
+.contributor-links a {
+    margin-left: 0.75rem;
+    opacity: 0.75;
+    transition: all 0.2s ease;
+}
+
+.contributor-links a:hover {
+    opacity: 1;
+    transform: scale(1.15);
+    color: #008793;
 }
