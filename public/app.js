@@ -163,7 +163,10 @@ function showAboutUs() {
     aboutView.innerHTML = `
             <div class="post-detail">
                 <div class="detail-card">
-                    <h1 class="detail-title">About Us</h1>
+                    <h1 class="detail-title">
+                        <span class="about-icon">${icons.info}</span>
+                        About Us
+                    </h1>
                     <p class="detail-content">
                         Hilcoe Forum is a student-driven discussion platform built to help learners,
                         developers, and creators ask better questions, share real knowledge, and
@@ -176,7 +179,10 @@ function showAboutUs() {
                 </p>
             </div>
             <div class="detail-card">
-                <h2 class="detail-title">Our Mission</h2>
+                <h2 class="detail-title">
+                    <span class="about-icon">${icons.lightbulb}</span>
+                    Our Mission
+                </h2>
                 <p class="detail-content">
                     To empower students and developers to learn faster by asking freely,
                     answering honestly, and building knowledge together in a respectful space.
@@ -184,7 +190,10 @@ function showAboutUs() {
             </div>
 
             <div class="detail-card">
-                <h2 class="detail-title">What Makes Hive Different</h2>
+                <h2 class="detail-title">
+                    <span class="about-icon">${icons.users}</span>
+                    What Makes Hive Different
+                </h2>
                 <ul class="detail-content">
                     <li>✔ Student-focused discussions</li>
                     <li>✔ Real projects, real problems</li>
@@ -194,7 +203,10 @@ function showAboutUs() {
             </div>
 
             <div class="detail-card">
-                <h2 class="detail-title">Contributors</h2>
+                <h2 class="detail-title">
+                    <span class="about-icon">${icons.github}</span>
+                    Contributors
+                </h2>
 
                 <div class="contributors">
 
@@ -225,7 +237,7 @@ function showAboutUs() {
                         <strong>Ruth Daniel</strong>
                         <div class="contributor-links">
                             <a href="https://github.com/Ruthdme" target="_blank">
-                                ${icons.github}
+                                  <img src="path/to/github-logo.svg" alt="GitHub Logo" />
                             </a>
                             <a href="https://t.me/ruthTeffera" target="_blank">
                             ${icons.telegram}
