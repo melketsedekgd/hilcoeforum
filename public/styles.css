@@ -338,6 +338,12 @@ body {
     overflow-y: auto;
     transition: transform var(--transition-slow);
 }
+/* Main content area – takes remaining space and can scroll if needed */
+#mainContent {
+    flex: 1 1 auto;                  /* grow to fill space */
+    overflow-y: auto;                /* scroll if content is very long */
+    height: calc(100vh - 73px);               /* ensure it can be full height */
+}
 
 @media (max-width: 1024px) {
     .sidebar {
@@ -420,6 +426,9 @@ body {
 .content {
     flex: 1;
     padding: 1.5rem;
+    height: calc(100vh - 73px);
+    overflow-y: auto; 
+    padding: 16px;
 }
 
 @media (max-width: 768px) {

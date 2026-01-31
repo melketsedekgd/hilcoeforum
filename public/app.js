@@ -45,8 +45,10 @@ const icons = {
     messageCircle: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>',
     share: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>',
     info: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <circle cx="12" cy="12" r="10"></circle> <line x1="12" y1="16" x2="12" y2="12"></line> <line x1="12" y1="8"  x2="12.01" y2="8"></line> </svg>`,
-    github: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M9 19c-5 1.5-5-2.5-7-3"/> <path d="M15 19c5 1.5 5-2.5 7-3"/> <path d="M12 2c5.5 0 10 3.5 10 9 0 4.5-3 8-7 9 v-3c0-1-.5-2-1.5-2 3.5-.5 7-2 7-6 0-1.5-.5-3-1.5-4"/> </svg>`,
-    telegram: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M22 2L11 13"/> <path d="M22 2L15 22l-4-9-9-4z"/></svg>`
+    github: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#000000"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>`,
+    telegram: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org">
+  <path d="M21.5 3.5L2.5 11L9.5 14L21.5 3.5Z" fill="#24A1DE"/>
+  <path d="M21.5 3.5L9.5 14V19L12.5 15.5L17.5 19L21.5 3.5Z" fill="#24A1DE"/></svg>`
 };
 
 // DOM Elements
@@ -130,124 +132,137 @@ function renderCategories() {
 }
 
 // Select Category
-// Select Category
+
 function selectCategory(categoryId) {
-    // Always reset detail view when changing category
+    // 1. Always reset detail view when changing category
     if (state.selectedPost) {
-        backToForum();  // or directly reset state & visibility
+        backToForum();           // This should hide detail & show list
     }
 
+    // 2. Update state
     state.selectedCategory = categoryId;
-    state.selectedPost = null;  // extra safety
+    state.selectedPost = null;   // Important: clear any open post
 
-    // Close mobile menu if open
+    // 3. Close mobile menu if open
     closeMobileMenu();
 
-    // Re-render everything
+    // 4. Special handling for "About" page
+    if (categoryId === 'about') {
+        showAboutUs();
+        return;   // ← important: stop here, don't render posts/categories again
+    }
+
+    // 5. Normal category → show forum list
+    postListView.style.display = 'block';
+    postDetailView.style.display = 'none';
+
+    // Hide about view if it was visible
+    const aboutView = document.getElementById('aboutView');
+    if (aboutView) {
+        aboutView.style.display = 'none';
+    }
+
+    // 6. Re-render UI
     renderCategories();
     renderPosts();
 
-    // Optional: scroll to top or update title
-    window.scrollTo(0, 0);
+    // 7. Update title & scroll
     categoryTitle.textContent = categoryId === 'all'
         ? 'All Discussions'
-        : `${categories.find(c => c.id === categoryId)?.name || 'Category'} Discussions`;
+        : `${categories.find(c => c.id === categoryId)?.name || categoryId} Discussions`;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showAboutUs() {
-    categoryTitle.textContent = "About Us";
+    // Update state & title
     state.selectedCategory = 'about';
+    categoryTitle.textContent = "About Us";
+
+    // Re-render categories so "About" stays highlighted
     renderCategories();
 
+    // Hide forum views
     postListView.style.display = 'none';
     postDetailView.style.display = 'none';
 
+    // Show about section
     const aboutView = document.getElementById('aboutView');
+    if (!aboutView) {
+        console.warn('aboutView element not found in DOM');
+        return;
+    }
+
     aboutView.style.display = 'block';
+    const git = ''
 
+    // Set content (you can keep your HTML, I just made it cleaner)
     aboutView.innerHTML = `
-<div class="post-detail">
-
-    <div class="detail-card">
-        <h1 class="detail-title">About Us</h1>
-
-        <p class="detail-content">
-            Us Forum is a student-driven discussion platform built to help learners,
-            developers, and creators ask better questions, share real knowledge, and
-            grow together as a community.
-        </p>
-
-        <p class="detail-content">
-            Inspired by platforms like Stack Overflow and Reddit, Us focuses on
-            clarity, collaboration, and learning by doing — not just consuming.
-        </p>
-    </div>
-
-    <div class="detail-card">
-        <h2 class="detail-title">Our Mission</h2>
-        <p class="detail-content">
-            To empower students and developers to learn faster by asking freely,
-            answering honestly, and building knowledge together in a respectful space.
-        </p>
-    </div>
-
-    <div class="detail-card">
-        <h2 class="detail-title">What Makes Us Different</h2>
-        <ul class="detail-content">
-            <li>✔ Student-focused discussions</li>
-            <li>✔ Real projects, real problems</li>
-            <li>✔ Clean UI, no distractions</li>
-            <li>✔ Built by students, for students</li>
-        </ul>
-    </div>
-
-    <div class="detail-card">
-        <h2 class="detail-title">Contributors</h2>
-
-        <div class="contributors">
-
-            <div class="contributor">
-                <strong>Samuel Mifta</strong>
-                <div class="contributor-links">
-                    <a href="https://github.com/Sami7ma" target="_blank" title="GitHub">
-                        ${icons.github}
-                    </a>
-                    <a href="https://t.me/sami7ma" target="_blank" title="Telegram">
-                        ${icons.telegram}
-                    </a>
-                </div>
+        <div class="post-detail">
+            <div class="detail-card">
+                <h1 class="detail-title">About Us</h1>
+                <p class="detail-content">
+                    <strong>Us Forum</strong> is a student-driven discussion platform built for learners,
+                    developers, and creators who want to ask better questions, share real knowledge,
+                    and grow together.
+                </p>
+                <p class="detail-content">
+                    Inspired by platforms like Stack Overflow and Reddit, Us focuses on
+                    clarity, collaboration, and learning by doing — not just consuming.
+                </p>
             </div>
 
-            <div class="contributor">
-                <strong>Melketsedik Getener</strong>
-                <div class="contributor-links">
-                    <a href="https://github.com/melketsedekgd" target="_blank">
-                        ${icons.github}
-                    </a>
-                    <a href="https://t.me/melkegd" target="_blank">
-                        ${icons.telegram}
-                    </a>
-                </div>
+            <div class="detail-card">
+                <h2 class="detail-title">Our Mission</h2>
+                <p class="detail-content">
+                    To empower students and developers to learn faster by asking freely,
+                    answering honestly, and building knowledge together in a respectful space.
+                </p>
             </div>
 
-            <div class="contributor">
-                <strong>Ruth Daniel</strong>
-                <div class="contributor-links">
-                    <a href="https://github.com/Ruthdme" target="_blank">
-                        ${icons.github}
-                    </a>
-                    <a href="https://t.me/ruthTeffera" target="_blank">
-                        ${icons.telegram}
-                    </a>
-                </div>
+            <div class="detail-card">
+                <h2 class="detail-title">What Makes Us Different</h2>
+                <ul class="detail-content">
+                    <li>Student-focused discussions</li>
+                    <li>Real projects, real problems</li>
+                    <li>Clean UI, no distractions</li>
+                    <li>Built by students, for students</li>
+                </ul>
             </div>
 
+            <div class="detail-card">
+                <h2 class="detail-title">Contributors</h2>
+                <div class="contributors">
+                
+                    <div class="contributor">
+                        <strong>Melketsedek Getnet</strong>
+                        <div class="contributor-links">
+                            <a href="https://github.com/melketsedekgd" target="_blank">${icons.github}</a>
+                            <a href="https://t.me/melkegd" target="_blank">${icons.telegram}</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contributor">
+                        <strong>Samuel Mifta</strong>
+                        <div class="contributor-links">
+                            <a href="https://github.com/Sami7ma" target="_blank" title="GitHub">${icons.github}</a>
+                            <a href="https://t.me/sami7ma" target="_blank" title="Telegram">${icons.telegram}</a>
+                        </div>
+                    </div>
+
+                    <div class="contributor">
+                        <strong>Ruth Daniel</strong>
+                        <div class="contributor-links">
+                            <a href="https://github.com/Ruthdme" target="_blank">${icons.github}</a>
+                            <a href="https://t.me/ruthTeffera" target="_blank">${icons.telegram}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    `;
 
-</div>
-`;
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // Render Posts
