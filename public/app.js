@@ -312,7 +312,7 @@ function renderPosts() {
                         <div class="post-stats">
                             
                             <div class="stat">${icons.thumbsUp}<span>${post.likes}</span></div>
-                            <div class="stat">${icons.messageCircle}<span>${post.replies}</span></div>
+                            <div class="stat">${icons.messageCircle}<span>${post.replies?.length || 0}</span></div>
                         </div>
 
                         <div class="post-author-info">
