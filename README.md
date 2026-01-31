@@ -27,4 +27,4 @@ Users can:
 
 ## Live Demo
 
-🔗 https://hilcoesforum.netlify.app/
+🔗 https://hilcoeforums.netlify.app/
