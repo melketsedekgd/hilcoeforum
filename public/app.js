@@ -130,23 +130,28 @@ function renderCategories() {
 }
 
 // Select Category
+// Select Category
 function selectCategory(categoryId) {
-    // Leaving About → restore normal forum view
-    if (state.selectedCategory === 'about' && categoryId !== 'about') {
-        postListView.style.display = 'block';
-        postDetailView.style.display = 'none';
-    }
-
-    if (categoryId === 'about') {
-        showAboutUs();
-        closeMobileMenu();
-        return;
+    // Always reset detail view when changing category
+    if (state.selectedPost) {
+        backToForum();  // or directly reset state & visibility
     }
 
     state.selectedCategory = categoryId;
+    state.selectedPost = null;  // extra safety
+
+    // Close mobile menu if open
     closeMobileMenu();
+
+    // Re-render everything
     renderCategories();
     renderPosts();
+
+    // Optional: scroll to top or update title
+    window.scrollTo(0, 0);
+    categoryTitle.textContent = categoryId === 'all'
+        ? 'All Discussions'
+        : `${categories.find(c => c.id === categoryId)?.name || 'Category'} Discussions`;
 }
 
 function showAboutUs() {
@@ -881,6 +886,15 @@ async function init() {
     supabase.auth.onAuthStateChange(() => {
         updateAuthButton();
     });
+
+
+    // Temporary: force logout on every load during development
+    if (true) {  // change to false when done testing
+        await supabase.auth.signOut();
+        state.currentUser = null;
+        localStorage.clear();  // extra aggressive
+    }
+
 }
 
 if (document.readyState === 'loading') {
